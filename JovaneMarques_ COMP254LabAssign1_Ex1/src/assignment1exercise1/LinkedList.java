@@ -1,4 +1,4 @@
-package assignment1;
+package assignment1exercise1;
 
 public class LinkedList {
 	Node root;
@@ -18,7 +18,7 @@ public class LinkedList {
 		Node savedPreviousN2Node = null;
 		Node savedN2Node = null;
 		Node tempNode = null;
-//		if (currentNode != null && currentNode.getNextNode() != null && n1 != null && n2 != null && n1 != n2) {
+
 		while (currentNode != null) {
 			// if found the N1
 			if (currentNode.getData() == n1.getData()) {
@@ -31,15 +31,15 @@ public class LinkedList {
 			}
 			// if found both, stop the searching
 			if (savedN1Node != null && savedN2Node != null) {
-				// swapping N1 previous 
+				// swapping N1 previous
 				if (savedPreviousN1Node == null) {
-					root = n2;//if root
+					root = n2;// if root
 				} else {
 					savedPreviousN1Node.setNextNode(n2);
 				}
 				// swapping N2 previous
 				if (savedPreviousN2Node == null) {
-					root = n1;//if root
+					root = n1;// if root
 				} else {
 					savedPreviousN2Node.setNextNode(n1);
 				}
