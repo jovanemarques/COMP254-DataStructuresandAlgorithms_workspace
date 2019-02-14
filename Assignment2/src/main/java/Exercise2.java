@@ -19,6 +19,8 @@ import org.jfree.fx.FXGraphics2D;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -104,74 +106,30 @@ public class Exercise2 extends Application {
 	}
 
 	private static XYDataset createDataset() {
-
-		double[][] arrayNums = new double[][] {
-				new double[] { 1.5, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7,
-						5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8,
-						2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3,
-						9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2,
-						7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7,
-						5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8, 2.7, 5.2, 7.3, 9.8 },
-				new double[] { 1000.23, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32,
-						6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22,
-						9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32,
-						6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22,
-						9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32,
-						6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22,
-						9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32,
-						6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22,
-						9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32,
-						6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22,
-						9000.33, 3000.32, 6000.23, 7000.22, 9000.33, 3000.32, 6000.23, 7000.22, 9000.33 },
-				new double[] { 1000000.11, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55, 3000000.22, 6000000.33,
-						7000000.44, 9000000.55, 3000000.22, 6000000.33, 7000000.44, 9000000.55 },
-				new double[] { 123123123.123123, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321, 321321321.321321,
-						321321321.321321, 321321321.321321 } };
+		
+		showAlert("The system will start the number generation...\n\nPress OK to continue.");
+		double[][] arrayNums = generateValues();
 		long startTime, endTime, totalTime = 0;
 
 		XYSeries xy1 = new XYSeries("prefixAverage1");
 		XYSeries xy2 = new XYSeries("prefixAverage2");
 
+		showAlert("Now the system will generate the prefixes average time...\n\nPress OK to continue.");
 		for (int i = 0; i < arrayNums.length; i++) {
 			startTime = System.currentTimeMillis();
 			PrefixAverage.prefixAverage1(arrayNums[i]);
 			endTime = System.currentTimeMillis();
-			totalTime = (endTime - startTime) / 1000;// in seconds
-			xy1.add(arrayNums[i][0], totalTime);
+			totalTime = (endTime - startTime) / 1000;   // in seconds
+			xy1.add(arrayNums[i].length, totalTime);
 
 			startTime = System.currentTimeMillis();
 			PrefixAverage.prefixAverage2(arrayNums[i]);
 			endTime = System.currentTimeMillis();
-			totalTime = (endTime - startTime) / 1000;// in seconds
-			xy2.add(arrayNums[i][0], totalTime);
+			totalTime = (endTime - startTime) / 1000;   // in seconds
+			xy2.add(arrayNums[i].length, totalTime);
 		}
+		
+		showAlert("All calculations are done. Press ok to display the chart.");
 
 		XYSeriesCollection collection = new XYSeriesCollection();
 		collection.addSeries(xy1);
@@ -186,18 +144,44 @@ public class Exercise2 extends Application {
 		JFreeChart chart = createChart(dataset);
 		ChartCanvas canvas = new ChartCanvas(chart);
 		StackPane stackPane = new StackPane();
+
 		stackPane.getChildren().add(canvas);
 		// Bind canvas size to stack pane size.
 		canvas.widthProperty().bind(stackPane.widthProperty());
 		canvas.heightProperty().bind(stackPane.heightProperty());
 		stage.setScene(new Scene(stackPane));
-		stage.setTitle("Exercise 2");
+		stage.setTitle("Exercise 2 - Prefix Average");
 		stage.setWidth(700);
 		stage.setHeight(390);
+
 		stage.show();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	private static double[][] generateValues() {
+		int[] sizes = { 5, 10, 25, 50, 75, 100, 125, 150 };
+		double[][] result = new double[sizes.length][];
+		
+		for (int i = 0; i < sizes.length; i++) {
+			int value = sizes[i];
+			result[i] = new double[value];
+			for (int j = 0; j < value; j++) {
+				result[i][j] = Math.random() * 100;
+			}
+		}
+		
+		return result;
+	}
+	
+	// Show a Information Alert with header Text
+    public static void showAlert(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setHeaderText("Exercise 2 - Prefix Average");
+        alert.setContentText(message); 
+        alert.showAndWait();
+    }
+	
 }
