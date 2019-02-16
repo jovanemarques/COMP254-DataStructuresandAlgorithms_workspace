@@ -25,6 +25,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Exercise2 extends Application {
+	private static final int PREFIX_EXECUTIONS_PER_SIZE = 5;
+
 	static class ChartCanvas extends Canvas {
 
 		JFreeChart chart;
@@ -64,11 +66,14 @@ public class Exercise2 extends Application {
 
 	private static JFreeChart createChart(XYDataset dataset) {
 
-		JFreeChart chart = ChartFactory.createXYLineChart("Experimental analysis", "x value", "Time", dataset);
+		JFreeChart chart = ChartFactory.createXYLineChart(
+				"Prefix Avarege - Experimental Analysis", "n value", 
+				"Time (s)", dataset);
 
 		String fontName = "Palatino";
 		chart.getTitle().setFont(new Font(fontName, Font.BOLD, 18));
-		chart.addSubtitle(new TextTitle("prefixAverage1 vs prefixAverage2", new Font(fontName, Font.PLAIN, 14)));
+		chart.addSubtitle(new TextTitle("prefixAverage1 vs prefixAverage2", 
+				new Font(fontName, Font.PLAIN, 14)));
 
 		XYPlot plot = (XYPlot) chart.getPlot();
 		plot.setDomainPannable(true);
@@ -90,7 +95,8 @@ public class Exercise2 extends Application {
 			renderer.setDrawSeriesLineAsPath(true);
 			// set the default stroke for all series
 			renderer.setAutoPopulateSeriesStroke(false);
-			renderer.setDefaultStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL), false);
+			renderer.setDefaultStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, 
+					BasicStroke.JOIN_BEVEL), false);
 			renderer.setSeriesPaint(0, Color.RED);
 			renderer.setSeriesPaint(1, new Color(24, 123, 58));
 			renderer.setSeriesPaint(2, new Color(149, 201, 136));
@@ -106,29 +112,47 @@ public class Exercise2 extends Application {
 	}
 
 	private static XYDataset createDataset() {
-		
-		showAlert("The system will start the number generation...\n\nPress OK to continue.");
+
 		double[][] arrayNums = generateValues();
 		long startTime, endTime, totalTime = 0;
 
 		XYSeries xy1 = new XYSeries("prefixAverage1");
 		XYSeries xy2 = new XYSeries("prefixAverage2");
 
-		showAlert("Now the system will generate the prefixes average time...\n\nPress OK to continue.");
+		showAlert("The system will generate the prefixes average time.\n"
+				+ "It is going to take up 5 minutes. Please be patience.\n\n"
+				+ "Press OK to start.");
 		for (int i = 0; i < arrayNums.length; i++) {
-			startTime = System.currentTimeMillis();
-			PrefixAverage.prefixAverage1(arrayNums[i]);
-			endTime = System.currentTimeMillis();
-			totalTime = (endTime - startTime) / 1000;   // in seconds
+			totalTime = 0;
+			System.out.printf("Using prefixAverage1 for %d items: ", 
+					arrayNums[i].length);
+			for (int ct = 0; ct < PREFIX_EXECUTIONS_PER_SIZE; ct++) {
+				startTime = System.currentTimeMillis();
+				PrefixAverage.prefixAverage1(arrayNums[i]);
+				endTime = System.currentTimeMillis();
+				System.out.printf("%dms ", (endTime - startTime));
+				totalTime += (endTime - startTime);
+			}
+			totalTime /= PREFIX_EXECUTIONS_PER_SIZE;
+			totalTime /= 1000; // Transform in seconds
+			System.out.printf(" - Avg: %ds\n", totalTime);
 			xy1.add(arrayNums[i].length, totalTime);
 
-			startTime = System.currentTimeMillis();
-			PrefixAverage.prefixAverage2(arrayNums[i]);
-			endTime = System.currentTimeMillis();
-			totalTime = (endTime - startTime) / 1000;   // in seconds
+			System.out.printf("Using prefixAverage2 for %d items: ", 
+					arrayNums[i].length);
+			for (int ct = 0; ct < PREFIX_EXECUTIONS_PER_SIZE; ct++) {
+				startTime = System.currentTimeMillis();
+				PrefixAverage.prefixAverage2(arrayNums[i]);
+				endTime = System.currentTimeMillis();
+				System.out.printf("%dms ", (endTime - startTime));
+				totalTime = (endTime - startTime);
+			}
+			totalTime /= PREFIX_EXECUTIONS_PER_SIZE;
+			totalTime /= 1000; // Transform in seconds
+			System.out.printf(" - Avg: %ds\n\n", totalTime);
 			xy2.add(arrayNums[i].length, totalTime);
 		}
-		
+
 		showAlert("All calculations are done. Press ok to display the chart.");
 
 		XYSeriesCollection collection = new XYSeriesCollection();
@@ -160,11 +184,11 @@ public class Exercise2 extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	private static double[][] generateValues() {
 		int[] sizes = { 5, 10, 25, 50, 75, 100, 125, 150 };
 		double[][] result = new double[sizes.length][];
-		
+
 		for (int i = 0; i < sizes.length; i++) {
 			int value = sizes[i];
 			result[i] = new double[value];
@@ -172,16 +196,16 @@ public class Exercise2 extends Application {
 				result[i][j] = Math.random() * 100;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	// Show a Information Alert with header Text
-    public static void showAlert(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setHeaderText("Exercise 2 - Prefix Average");
-        alert.setContentText(message); 
-        alert.showAndWait();
-    }
-	
+	public static void showAlert(String message) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("Exercise 2 - Prefix Average");
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
 }
